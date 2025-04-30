@@ -4,6 +4,10 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  has_one_attached :avatar
+  has_one :artist , dependent: :destroy
+  has_many :playlists, dependent: :destroy
+
   # after_initialize :set_default_role
   # no need to set default role here as it is already set in the migration
   def get_role

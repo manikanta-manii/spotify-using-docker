@@ -1,0 +1,40 @@
+<nav class="navbar navbar-dark bg-black">
+  <div class="container-fluid">
+    <div class="d-flex align-items-center">
+      <a class="navbar-brand" href="#"><i class="fa-brands fa-spotify fa-2xl"></i></a>
+    </div>
+
+    <% if user_signed_in? %>
+      <div class="nav-links ms-4 d-flex align-items-center gap-3">
+        <a href="#" class="nav-link d-flex align-items-center gap-2 text-white">
+          <i class="fa-solid fa-house fa-2xl"></i>
+        </a>
+        <div class="search-container position-relative">
+          <form class="search-form">
+            <input type="search" class="search-input" placeholder="What do you want to listen to?">
+          </form>
+        </div>
+      </div>
+    <% end %>
+    <div class="d-flex align-items-center gap-3">
+      <% if user_signed_in? && current_user.is_admin? %>
+        <div class="dashboard-btn">
+          <a href="/admin" class="btn btn-outline-light d-flex align-items-center gap-2">
+            <span class="material-symbols-outlined">grid_view</span>
+            <span>Admin Dashboard</span>
+          </a>
+        </div>
+      <% end %>
+      <% if user_signed_in? %>
+        <%= link_to 'Log out', destroy_user_session_path ,  method: :delete,data: { turbo_method: :delete } , class: 'btn btn-link text-light text-decoration-none fw-bold'%>
+        <div class="avatar-container">
+          <img src="https://images7.alphacoders.com/105/thumb-1920-1054068.png" alt="User Avatar" class="avatar-image">
+        </div>
+      <% end %>
+      <% unless  user_signed_in?%>
+        <%= link_to 'Sign up', new_user_registration_path , class: 'btn btn-link text-light text-decoration-none fw-bold'%>
+        <%= link_to 'Log in', new_user_session_path, class: 'btn btn-light fw-bold px-4 py-2 rounded-pill' %>
+      <% end %>
+    </div>
+  </div>
+</nav>

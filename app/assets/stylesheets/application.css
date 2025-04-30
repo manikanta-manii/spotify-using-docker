@@ -1,10 +1,164 @@
 /*
- * This is a manifest file that'll be compiled into application.css.
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
  *
- * With Propshaft, assets are served efficiently without preprocessing steps. You can still include
- * application-wide styles in this file, but keep in mind that CSS precedence will follow the standard
- * cascading order, meaning styles declared later in the document or manifest will override earlier ones,
- * depending on specificity.
+ * Any CSS (and SCSS, if configured) file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
  *
- * Consider organizing styles into separate files for maintainability.
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
  */
+
+/* Add these imports at the top of your CSS file */
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0');
+
+:root {
+    --color-green: #1DB954;
+    --color-white: #FFFFFF;
+    --color-black: #000000;
+    --color-grey1: #282828;
+    --color-grey2: #383838;
+    --color-grey3: #B3B3B3;
+    --color-grey4: #121212;
+    --color-red: #FF4444;
+}
+
+body {
+    background-color: var(--color-black) !important;
+    color: var(--color-white) !important;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif !important;
+    margin: 0;
+    padding: 0;
+    line-height: normal !important;
+}
+
+#navbar-header-container {
+
+    .btn {
+        padding: 8px 16px;
+        border-radius: 500px;
+        font-weight: 600;
+        font-size: 16px;
+        transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+        transform: scale(1.04);
+    }
+
+    .btn:active {
+        transform: scale(0.96);
+    }
+
+    .avatar-container {
+        display: flex;
+        align-items: center;
+    }
+
+    .avatar-image {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid var(--color-grey2);
+    }
+
+    /* Navbar Search Bar css  */
+
+    .search-container {
+        height: 50px;
+        width: 350px;
+        position: relative; /* Add this to position icons */
+
+        .search-form {
+            height: 100%;
+            position: relative; /* Add this for icon positioning */
+        }
+
+        .search-input {
+            height: 100%;
+            width: 100%;
+            padding-left: 45px;
+            padding-right: 40px;
+            margin-left: 5px;
+            font-size: 1rem;
+            border-radius: 500px;
+            background-color: var(--color-grey4);
+            color: var(--color-white);
+            border: 1px solid var(--color-grey2);
+            outline: none;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        /* Add search icon using pseudo-element */
+        .search-form::before {
+            content: "search"; /* Material Symbols icon name */
+            font-family: 'Material Symbols Outlined';
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--color-grey3);
+            font-size: 28px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Add cancel icon using pseudo-element */
+        .search-form::after {
+            content: "close"; /* Material Symbols icon name */
+            font-family: 'Material Symbols Outlined';
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--color-grey3);
+            font-size: 20px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1;
+        }
+
+        .search-input:focus {
+            background-color: var(--color-grey1);
+            border-color: var(--color-white);
+        }
+        .search-input:hover {
+            background-color: var(--color-grey1);
+            border-color: var(--color-white);
+        }
+
+        .search-input::-webkit-search-cancel-button {
+            -webkit-appearance: none;
+        }
+
+    }
+}
+
+.main-container-parent {
+    margin-top: 70px;
+    height: calc(100vh - 70px);
+}
+
+.sidebar {
+    width: 20%;
+    background-color: var(--color-grey4);
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column; /* Stack children vertically */
+}
+
+.main-content {
+    width: 80%;
+    background-color: var(--color-grey4);
+    padding: 20px;
+    border-radius: 20px;
+    overflow-y: auto;
+}

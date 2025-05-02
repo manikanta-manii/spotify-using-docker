@@ -8,6 +8,9 @@ class User < ApplicationRecord
   has_one :artist , dependent: :destroy
   has_many :playlists, dependent: :destroy
 
+  validates :name, presence: true
+  validates :email, presence: true, uniqueness: true
+
   # after_initialize :set_default_role
   # no need to set default role here as it is already set in the migration
   def get_role

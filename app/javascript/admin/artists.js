@@ -1,5 +1,6 @@
 $(document).ready(function() {
     $('#current_tab_content').on('click', '.manage_artist_btn', handleManageArtist);
+    $('#current_tab_content').on('click', '.artist-delete', handleArtistDelete);
     $('#manage_artist_drawer').on('click', '.close-artist-drawer-btn', handleArtistDrawerClose);
     $('#manage_artist_drawer').on('click','.btn-save',handleArtistSave);
 });
@@ -7,21 +8,32 @@ $(document).ready(function() {
 function handleArtistSave(){
     const isValid = validateArtistForm();
     if(isValid){
+        const artistId = $(this).data('artist-id') || null;
+        const ajaxUrlEndPoint = artistId ? `${artistId}` : '';
+        const methodType = artistId ? 'PATCH' : 'POST';
+        const ajaxUrl = `admin/artists/${ajaxUrlEndPoint}`;
+
         let formData = new FormData($("#manage_artist_form")[0]);
         $("#manage_artist_drawer").LoadingOverlay("show");
         $.ajax({
-            url: "admin/artists",
-            method: "POST",
+            url: ajaxUrl,
+            method: methodType,
             data: formData,
             headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content') },
             processData: false,
             contentType: false
         })
         .done(function(response) {
-
+            handleArtistDrawerClose();
         })
-        .fail(function() {
-
+        .fail(function(response) {
+            const errors = response.responseJSON.errors;
+            if (Array.isArray(errors) && errors.length > 0) {
+                const errorMessage = `Please fix the following errors:\n\n${errors.join('\n')}`;
+                alert(errorMessage);
+            } else {
+                alert('An unknown error occurred.');
+            }
         })
         .always(function() {
             $("#manage_artist_drawer").LoadingOverlay("hide");
@@ -62,25 +74,43 @@ function validateArtistForm() {
     return true;
 }
 function handleManageArtist(){
-    //do something
+    const artistId = $(this).data('artist-id') || null;
+    $('#manage_artist_drawer .btn-save').data('artistId',artistId);
     openDrawer('manage_artist_drawer');
-    //do something
+    $("#manage_artist_drawer").LoadingOverlay("show");
+    $.ajax({
+        url: "admin/artists/get_artist_form",
+        method: "GET",
+        data: {id: artistId },
+        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content') }
+    })
+    .done(function(response) {
+        const contentDiv = $('#manage_artist_drawer').find('div[slot="content"]');
+        contentDiv.html(response.content);
+    })
+    .fail(function(response) {
+
+    })
+    .always(function() {
+        $("#manage_artist_drawer").LoadingOverlay("hide");
+    });
 }
 
 function handleArtistDrawerClose(){
-    // Do something
     closeDrawer('manage_artist_drawer');
-    //do something
+    $('#artists-table').bootstrapTable('refresh');
 }
+
 function artistNameFormatter(value, row, index){
-    return `<span class="artist-name manage_artist_btn">${value}</span>`
+    return `<span data-artist-id="${row.id}" class="artist-name manage_artist_btn">${value}</span>`
 }
+
 function artistAvatarFormatter(value, row, index) {
     return `<img src="${value}" alt="Avatar" class="artist-avatar">`;
 }
 
 function artistActionFormatter(value, row, index){
-    return `<span class="material-symbols-outlined artist-delete">delete</span>`
+    return `<span class="material-symbols-outlined artist-delete" data-artist-id=${row.id}>delete</span>`
 }
 
 function artistQueryParams(params){
@@ -95,4 +125,27 @@ function artistQueryParams(params){
         per_page: params.limit,
         page: params.offset / params.limit + 1
     };
+}
+
+function handleArtistDelete(){
+    if (confirm("Are you sure you want to delete this artist?")) {
+        const artistId = $(this).data('artistId');
+        $.ajax({
+            url: `admin/artists/${artistId}`,
+            method: 'DELETE',
+            headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content') }
+        })
+        .done(function(response) {
+            $("#artists-table").bootstrapTable('refresh');
+        })
+        .fail(function(response) {
+            const errors = response.responseJSON.errors;
+            if (Array.isArray(errors) && errors.length > 0) {
+                const errorMessage = `Please fix the following errors:\n\n${errors.join('\n')}`;
+                alert(errorMessage);
+            } else {
+                alert('An unknown error occurred.');
+            }
+        })
+    }
 }

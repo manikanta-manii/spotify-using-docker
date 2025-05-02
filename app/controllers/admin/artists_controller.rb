@@ -1,106 +1,78 @@
 class Admin::ArtistsController < Admin::BaseController
   def index
+    render json: Admin::ArtistsPresenter.new(params).gather_data
+  end
+
+  def get_artist_form
+    if params[:id].present?
+       @artist = Artist.find(params[:id])
+    else
+      @artist = User.new.build_artist
+    end
     render json: {
-      total: 10,
-      rows: [
-        {
-          id: 1,
-          name: "Anirudh",
-          avatar: "https://i.pinimg.com/736x/f0/a6/f7/f0a6f72b9e638a652aec92c6f39d6b83.jpg",
-          dob: "2002-12-15",
-          email: "anirudh@example.com",
-          bio: "Rockstar music composer"
-        },
-        {
-          id: 2,
-          name: "GV Prakash",
-          avatar: "https://i.pinimg.com/736x/f0/a6/f7/f0a6f72b9e638a652aec92c6f39d6b83.jpg",
-          dob: "1987-06-13",
-          email: "gvprakash@example.com",
-          bio: "Singer and composer"
-        },
-        {
-          id: 3,
-          name: "MM Keeravani",
-          avatar: "https://i.pinimg.com/736x/f0/a6/f7/f0a6f72b9e638a652aec92c6f39d6b83.jpg",
-          dob: "1961-07-04",
-          email: "mmkeeravani@example.com",
-          bio: "Award-winning composer"
-        },
-        {
-          id: 4,
-          name: "AR Rahman",
-          avatar: "https://i.pinimg.com/736x/f0/a6/f7/f0a6f72b9e638a652aec92c6f39d6b83.jpg",
-          dob: "1967-01-06",
-          email: "arrahman@example.com",
-          bio: "Legendary music director"
-        },
-        {
-          id: 5,
-          name: "Ilaiyaraaja",
-          avatar: "https://i.pinimg.com/736x/f0/a6/f7/f0a6f72b9e638a652aec92c6f39d6b83.jpg",
-          dob: "1943-06-02",
-          email: "ilaiyaraaja@example.com",
-          bio: "The Maestro of Indian music"
-        },
-        {
-          id: 6,
-          name: "Ilaiyaraaja",
-          avatar: "https://i.pinimg.com/736x/f0/a6/f7/f0a6f72b9e638a652aec92c6f39d6b83.jpg",
-          dob: "1943-06-02",
-          email: "ilaiyaraaja@example.com",
-          bio: "The Maestro of Indian music"
-        },
-        {
-          id: 7,
-          name: "Ilaiyaraaja",
-          avatar: "https://i.pinimg.com/736x/f0/a6/f7/f0a6f72b9e638a652aec92c6f39d6b83.jpg",
-          dob: "1943-06-02",
-          email: "ilaiyaraaja@example.com",
-          bio: "The Maestro of Indian music"
-        },
-        {
-          id: 8,
-          name: "Ilaiyaraaja",
-          avatar: "https://i.pinimg.com/736x/f0/a6/f7/f0a6f72b9e638a652aec92c6f39d6b83.jpg",
-          dob: "1943-06-02",
-          email: "ilaiyaraaja@example.com",
-          bio: "The Maestro of Indian music"
-        },
-        {
-          id: 9,
-          name: "Ilaiyaraaja",
-          avatar: "https://i.pinimg.com/736x/f0/a6/f7/f0a6f72b9e638a652aec92c6f39d6b83.jpg",
-          dob: "1943-06-02",
-          email: "ilaiyaraaja@example.com",
-          bio: "The Maestro of Indian music"
-        },
-        {
-          id: 10,
-          name: "Ilaiyaraaja",
-          avatar: "https://i.pinimg.com/736x/f0/a6/f7/f0a6f72b9e638a652aec92c6f39d6b83.jpg",
-          dob: "1943-06-02",
-          email: "ilaiyaraaja@example.com",
-          bio: "The Maestro of Indian music"
-        },
-        {
-          id: 11,
-          name: "Ilaiyaraaja",
-          avatar: "https://i.pinimg.com/736x/f0/a6/f7/f0a6f72b9e638a652aec92c6f39d6b83.jpg",
-          dob: "1943-06-02",
-          email: "ilaiyaraaja@example.com",
-          bio: "The Maestro of Indian music"
-        }
-      ]
+      content: (render_to_string "admin/artists/form" , layout: false)
     }
   end
 
   def create
+    @user = User.new(user_params.merge(password: "artist@123", role: 1 ))
+    @artist = @user.build_artist(artist_params)
+    # Here new user object is created , but not saved (with user params + password + role)
+    # build_artist is ruby method which creates a new artist object but not saved , associated with user object
+    if @user.save
+      render json: { message: "Artist Created Successfully "}, status: :created
+    else
+      render json: { errors: @user.errors.full_messages + @artist.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+
+  def update
+    @artist = Artist.find(params[:id])
+    user_updated = @artist.user.update(user_params)
+    artist_updated = @artist.update(artist_params)
+
+    if user_updated && artist_updated
+      render json: { message: "Artist updated successfully." }, status: :ok
+    else
+      render json: { errors: @artist.errors.full_messages + @artist.user.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    @artist = Artist.find(params[:id])
+    @user = @artist.user
+
+    if @user.destroy
+      render json: { message: "Artist and associated user deleted successfully." }, status: :ok
+    else
+      render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+
+
+  # // My intial code
+  # @user = User.new(user_params)
+  # @user.role = 1
+  # @user.password = "artist@123"
+  # if @user.save
   #   @artist = Artist.new(artist_params)
+  #   @artist.user_id = @user.id
   #   if @artist.save
   #     render json: { message: 'Artist created successfully.', artist: @artist }, status: :created
   #   else
   #     render json: { errors: @artist.errors.full_messages }, status: :unprocessable_entity
   #   end
+  # else
+  #   render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
+  # end
+
+  private
+
+  def user_params
+    params.require(:user).permit(:name,:avatar,:dob,:email);
+  end
+
+  def artist_params
+    params.require(:artist).permit(:bio);
   end
 end

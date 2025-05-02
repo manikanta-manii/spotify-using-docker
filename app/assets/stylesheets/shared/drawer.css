@@ -1,0 +1,165 @@
+.drawer-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, 0.7);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+    z-index: 1031;
+}
+
+.drawer-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.drawer-component {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    height: 100vh;
+    background-color: var(--color-grey1);
+    box-shadow: -2px 0 8px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    transition: right 0.3s ease;
+    z-index: 1032;
+
+    .btn {
+        padding: 8px 16px;
+        border-radius: 500px;
+        font-weight: 600;
+        font-size: 16px;
+        transition: all 0.3s ease;
+        color: var(--color-white);
+        width: 100px;
+    }
+
+    .btn:hover {
+        transform: scale(1.04);
+    }
+
+    .btn:active {
+        transform: scale(0.96);
+    }
+
+
+    .btn-cancel{
+        background-color: transparent;
+    }
+
+
+}
+
+.drawer-component.open {
+    right: 0;
+}
+
+.drawer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 1rem;
+    border-bottom: 1px solid var(--color-grey2);
+}
+
+.drawer-title {
+    margin: 0;
+    font-size: 1.25rem;
+}
+
+.drawer-content {
+    flex: 1;
+    padding: 1rem;
+    overflow-x: auto;
+    word-break: break-word;
+}
+
+.drawer-footer {
+    padding: 1rem;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    border-top: 1px solid var(--color-grey2);
+}
+
+.drawer_main_container{
+    form {
+        input,
+        select,
+        textarea {
+            background: hsla(0, 0%, 100%, .1);
+            border: 1px solid transparent;
+            border-radius: 4px;
+            color: var(--color-white);
+            padding: 12px;
+            width: 100%;
+            resize: none;
+
+            &:focus{
+                outline: 1px solid var(--color-white);
+            }
+        }
+
+        label {
+            margin-bottom: 5px;
+        }
+
+        .avatar-upload {
+            position: relative;
+            width: 150px;
+            height: 150px;
+        }
+
+        .avatar-preview {
+            width: 150px;
+            height: 150px;
+            border-radius: 5px;
+            border: 1px solid var(--color-grey2);
+            cursor: pointer;
+            background-size: cover;
+            background-position: center;
+            background-color: #2a2a2a;
+            display: block;
+        }
+
+        .avatar-edit {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 5px;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .avatar-preview:hover .avatar-edit {
+            opacity: 1;
+        }
+
+        .avatar-edit i {
+            color: var(--color-white);
+            font-size: 24px;
+        }
+
+        #avatar {
+            display: none;
+        }
+
+        .form-group {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+    }
+
+}
+

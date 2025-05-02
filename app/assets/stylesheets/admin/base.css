@@ -1,0 +1,203 @@
+#admin_base_page {
+    .tab-container {
+        display: flex;
+        .tab-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--color-grey1);
+            color: var(--color-white);
+            border: 1px solid var(--color-grey2);
+            padding: 10px 20px;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            gap: 8px;
+
+            &:hover {
+                transform: scale(1.04);
+            }
+            &:focus {
+                outline: none;
+            }
+            .material-symbols-outlined {
+                font-size: 20px;
+            }
+        }
+        .first-tab{
+            border-radius: 15px 0 0 15px;
+        }
+        .last-tab{
+            border-radius: 0 15px 15px 0;
+        }
+
+        .tab-button[data-tab="artists"].active {
+            background-color: var(--color-artist);
+        }
+
+        .tab-button[data-tab="albums"].active {
+            background-color: var(--color-album);
+        }
+
+        .tab-button[data-tab="songs"].active {
+            background-color: var(--color-green);
+        }
+    }
+
+    .btn {
+        padding: 8px 16px;
+        transition: all 0.3s ease;
+        color: var(--color-white);
+    }
+
+    .btn:hover {
+        transform: scale(1.04);
+    }
+
+    .btn:active {
+        transform: scale(0.96);
+    }
+
+    .artist-btn{
+        background-color: var(--color-artist);
+    }
+
+    /*Common styles - bootstrap table*/
+
+    #current_tab_content .bootstrap-table{
+
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            margin-left: 10px;
+        }
+
+        table{
+            tbody, td, tfoot, th, thead, tr{
+                border: none
+            }
+
+            tr.selected td{
+                background-color: var(--color-grey2);
+            }
+
+            th{
+                background-color: var(--color-grey1);
+                color: var(--color-grey3);
+                font-weight: 600;
+                padding: 12px;
+            }
+
+            td {
+                background-color: var(--color-grey4);
+                color: var(--color-white);
+                padding: 12px;
+
+                &:hover{
+                    background-color: var(--color-grey1);
+                }
+            }
+            input[type="checkbox"] {
+                appearance: none;
+                width: 20px;
+                height: 20px;
+                border: 2px solid var(--color-grey3);
+                border-radius: 4px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+
+                &:hover{
+                    border-color: var(--color-artist);
+                }
+                &:checked{
+                    background-color: var(--color-artist);
+                    border-color: var(--color-artist);
+                    position: relative;
+
+                    &::after{
+                        font-family: 'Material Symbols Outlined';
+                        content: '\e5ca';
+                        color: var(--color-white);
+                        font-size: 14px;
+                        position: absolute;
+                    }
+                }
+            }
+        }
+
+        .fixed-table-pagination{
+
+            display: flex;
+            justify-content: flex-end;
+
+            .pagination {
+                padding: 10px;
+            }
+
+            .page-item.active .page-link {
+                background-color: var(--color-artist);
+                color: var(--color-white);
+            }
+
+            .page-link {
+                background-color: var(--color-grey1);
+                color: var(--color-grey3);
+                border: none;
+                margin: 0 4px;
+                border-radius: 4px;
+                transition: background-color 0.3s ease;
+            }
+
+        }
+
+        .pagination-detail{
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            .pagination-info , .page-list{
+                color: var(--color-artist-text);
+            }
+
+            .btn.dropdown-toggle{
+                background-color: var(--color-grey1);
+                padding: 6px 12px;
+                font-size: 14px;
+                border: none;
+                margin-right: 8px;
+
+                &:hover{
+                    background-color: var(--color-grey2);
+                }
+            }
+
+            .dropdown-menu{
+                background-color: var(--color-grey4);
+                border: 1px solid var(--color-grey1);
+                border-radius: 8px;
+                padding: 5px 0;
+
+                .dropdown-item{
+                    color: var(--color-grey3);
+                    padding: 8px 16px;
+                    font-size: 14px;
+
+                    &:hover{
+                        background-color: var(--color-grey2);
+                        border: none;
+                        color: var(--color-white);
+                    }
+                }
+
+                .dropdown-item.active{
+                    background-color: var(--color-artist);
+                    color: var(--color-white);
+                }
+            }
+        }
+    }
+}

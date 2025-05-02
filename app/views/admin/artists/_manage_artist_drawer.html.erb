@@ -1,0 +1,84 @@
+<%= stylesheet_link_tag 'shared/drawer.css' %>
+<div class="drawer_main_container">
+    <div id="manage_artist_drawer" class="drawer-component" style="width: 25%;">
+      <div class="drawer-header">
+        <div slot="header"><h4>Add an artist</h4></div>
+        <span class="material-symbols-outlined close-artist-drawer-btn" style="cursor: pointer">close</span>
+      </div>
+      <div class="drawer-content">
+        <div slot="content">
+          <form id="manage_artist_form">
+            <div class="form-group">
+              <label for="artist_avatar">Artist PFP</label>
+              <input name="user[avatar]" id="artist_avatar" type="file" placeholder="choose a picture">
+            </div>
+            <div class="form-group">
+              <label for="artist_name">Name<span class="ms-1 text-danger">*</span></label>
+              <input name="user[name]" id="artist_name" type="text" placeholder="Enter a name">
+            </div>
+            <div class="form-group">
+              <label for="artist_dob">Date of Birth</label>
+              <input name="user[dob]" id="artist_dob" type="date">
+            </div>
+            <div class="form-group">
+              <label for="artist_email">Email<span class="ms-1 text-danger">*</span></label>
+              <input name="user[email]" id="artist_email" type="email" placeholder="Enter an email">
+            </div>
+            <div class="form-group">
+              <label for="artist_bio">Bio</label>
+              <textarea name="artist[bio]" id="artist_bio" rows="10" placeholder="Enter artist bio"></textarea>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="drawer-footer">
+        <div slot="footer" class="w-100">
+          <button type="button" class="btn btn-save">Save</button>
+          <button type="button" class="btn close-artist-drawer-btn btn-cancel">Cancel</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+<!--This is Form Submit Way-->
+<%#= stylesheet_link_tag 'shared/drawer.css' %>
+<!--<div class="drawer_main_container">-->
+<!--  <form id="manage_artist_form">-->
+<!--    <div id="manage_artist_drawer" class="drawer-component" style="width: 25%;">-->
+<!--      <div class="drawer-header">-->
+<!--        <div slot="header"><h4>Add an artist</h4></div>-->
+<!--        <span class="material-symbols-outlined close-artist-drawer-btn" style="cursor: pointer">close</span>-->
+<!--      </div>-->
+<!--      <div class="drawer-content">-->
+<!--        <div slot="content">-->
+<!--             <div class="form-group">-->
+<!--               <label for="artist_avatar">Artist PFP</label>-->
+<!--               <input name="user[avatar]" id="artist_avatar" type="file" placeholder="choose a picture">-->
+<!--             </div>-->
+<!--            <div class="form-group">-->
+<!--              <label for="artist_name">Name<span class="ms-1 text-danger">*</span></label>-->
+<!--              <input name="user[name]" id="artist_name" type="text" placeholder="Enter a name">-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--              <label for="artist_dob">Date of Birth</label>-->
+<!--              <input name="user[dob]" id="artist_dob" type="date">-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--              <label for="artist_email">Email<span class="ms-1 text-danger">*</span></label>-->
+<!--              <input name="user[email]" id="artist_email" type="email" placeholder="Enter an email">-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--              <label for="artist_bio">Bio</label>-->
+<!--              <textarea name="artist[bio]" id="artist_bio" rows="10" placeholder="Enter artist bio"></textarea>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="drawer-footer">-->
+<!--        <div slot="footer" class="w-100">-->
+<!--          <button type="submit" class="btn btn-save">Save</button>-->
+<!--          <button type="button" class="btn close-artist-drawer-btn btn-cancel">Cancel</button>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </form>-->
+<!--</div>-->

@@ -59,10 +59,6 @@
         transform: scale(0.96);
     }
 
-    .artist-btn{
-        background-color: var(--color-artist);
-    }
-
     /*Common styles - bootstrap table*/
 
     #current_tab_content .bootstrap-table{
@@ -109,12 +105,7 @@
                 cursor: pointer;
                 transition: all 0.3s ease;
 
-                &:hover{
-                    border-color: var(--color-artist);
-                }
                 &:checked{
-                    background-color: var(--color-artist);
-                    border-color: var(--color-artist);
                     position: relative;
 
                     &::after{
@@ -138,7 +129,6 @@
             }
 
             .page-item.active .page-link {
-                background-color: var(--color-artist);
                 color: var(--color-white);
             }
 
@@ -159,9 +149,6 @@
             align-items: center;
             gap: 10px;
 
-            .pagination-info , .page-list{
-                color: var(--color-artist-text);
-            }
 
             .btn.dropdown-toggle{
                 background-color: var(--color-grey1);
@@ -194,7 +181,6 @@
                 }
 
                 .dropdown-item.active{
-                    background-color: var(--color-artist);
                     color: var(--color-white);
                 }
             }

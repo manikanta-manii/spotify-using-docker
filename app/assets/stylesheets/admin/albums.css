@@ -1,0 +1,79 @@
+.main-album-container{
+
+    .album-btn{
+        background-color: var(--color-album);
+
+        &:hover{
+            background-color: var(--color-album);
+        }
+    }
+
+    .bootstrap-table{
+
+        #albums-table{
+
+            .album-image-cover {
+                width: 80px;
+                height: 80px;
+                border-radius: 10px;
+                object-fit: cover;
+            }
+
+            .album-name {
+                color: var(--color-album-text);
+                text-decoration: underline;
+                cursor: pointer;
+            }
+
+            .album-delete {
+                cursor: pointer;
+
+                &:hover {
+                    color: var(--color-red);
+                }
+            }
+
+            input[type="checkbox"] {
+                &:hover{
+                    border-color: var(--color-album) !important;
+                }
+
+                &:checked{
+                    background-color: var(--color-album) !important;
+                    border-color: var(--color-album) !important;
+
+                }
+            }
+
+        }
+
+    }
+
+    .fixed-table-pagination{
+        .page-item.active .page-link {
+            background-color: var(--color-album) !important;
+        }
+    }
+    .pagination-detail{
+        .pagination-info , .page-list{
+            color: var(--color-album-text) !important;
+        }
+
+        .dropdown-menu{
+            .dropdown-item.active{
+                background-color: var(--color-album) !important;
+            }
+        }
+    }
+
+}
+
+#manage_album_drawer{
+    .btn-save{
+        background-color: var(--color-album);
+    }
+
+    .btn-save:hover{
+        background-color: var(--color-album);
+    }
+}

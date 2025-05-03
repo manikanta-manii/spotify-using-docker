@@ -1,31 +1,33 @@
-<div class="toolbar">
-  <button id="add_artist_btn" class="btn artist-btn manage_artist_btn">Add an artist</button>
-</div>
+<div class="main-artist-container">
+  <div class="toolbar">
+    <button id="add_artist_btn" class="btn artist-btn manage_artist_btn">Add an artist</button>
+  </div>
 
-<table id="artists-table"
-       class="table table-hover"
-       data-toggle="table"
-       data-search="true"
-       data-pagination="true"
-       data-side-pagination="server"
-       data-server-sort="true"
-       data-query-params="artistQueryParams"
-       data-page-size="10"
-       data-page-list="[10,25,50,all]"
-       data-sort-name="name"
-       data-sort-order="asc"
-       data-toolbar=".toolbar"
-       data-toolbar-align="right"
-       data-url="/admin/artists">
-  <thead>
-         <tr>
-           <th data-field="state" data-checkbox="true"></th>
-           <th data-field="avatar" data-formatter="artistAvatarFormatter">Avatar</th>
-           <th data-field="name" data-sortable="true" data-formatter="artistNameFormatter">Name</th>
-           <th data-field="dob">Date of Birth</th>
-           <th data-field="email">Email</th>
-           <th data-field="bio" class="bio-column">Bio</th>
-           <th data-field="action" data-formatter="artistActionFormatter"></th>
-         </tr>
-  </thead>
-</table>
+  <table id="artists-table"
+         class="table table-hover"
+         data-toggle="table"
+         data-search="true"
+         data-pagination="true"
+         data-side-pagination="server"
+         data-server-sort="true"
+         data-query-params="artistQueryParams"
+         data-page-size="10"
+         data-page-list="[10,25,50,all]"
+         data-sort-name="name"
+         data-sort-order="asc"
+         data-toolbar=".toolbar"
+         data-toolbar-align="right"
+         data-url="/admin/artists">
+    <thead>
+    <tr>
+      <th data-field="state" data-checkbox="true"></th>
+      <th data-field="avatar" data-formatter="artistAvatarFormatter">Avatar</th>
+      <th data-field="name" data-sortable="true" data-formatter="artistNameFormatter">Name</th>
+      <th data-field="dob">Date of Birth</th>
+      <th data-field="email">Email</th>
+      <th data-field="bio" class="bio-column">Bio</th>
+      <th data-field="action" data-formatter="artistActionFormatter"></th>
+    </tr>
+    </thead>
+  </table>
+</div>

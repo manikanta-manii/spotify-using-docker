@@ -24,7 +24,7 @@ function loadTabContent(tabName){
     })
     .done(function(response) {
         $("#current_tab_content").html(response.content);
-        $('#artists-table').bootstrapTable();
+        $(`#${tabName}-table`).bootstrapTable();
     })
     .fail(function() {
 

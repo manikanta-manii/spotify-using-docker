@@ -28,7 +28,8 @@
     --color-red: #FF4444;
     --color-artist: #8A2BE2;
     --color-artist-text: #C68EFD;
-    --color-album: #1B56FD;
+    --color-album: #F742BC;
+    --color-album-text: #D856C9
 }
 
 body {

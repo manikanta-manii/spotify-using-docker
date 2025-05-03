@@ -76,6 +76,7 @@ function validateArtistForm() {
 function handleManageArtist(){
     const artistId = $(this).data('artist-id') || null;
     $('#manage_artist_drawer .btn-save').data('artistId',artistId);
+    $('#manage_artist_drawer h4').text(artistId ? 'Edit an artist' : 'Add an artist');
     openDrawer('manage_artist_drawer');
     $("#manage_artist_drawer").LoadingOverlay("show");
     $.ajax({

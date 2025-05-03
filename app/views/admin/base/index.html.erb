@@ -1,6 +1,8 @@
 <%= stylesheet_link_tag 'admin/base.css' %>
 <%= stylesheet_link_tag 'admin/artists.css' %>
 <%= render partial: 'admin/artists/manage_artist_drawer' %>
+<%= render partial: 'admin/albums/manage_album_drawer' %>
+
 <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.21.3/dist/bootstrap-table.min.css">
 <script src="https://unpkg.com/bootstrap-table@1.21.3/dist/bootstrap-table.min.js"></script>
 <div id="admin_base_page">
@@ -20,3 +22,4 @@
 
 <%= javascript_include_tag 'admin/base.js' %>
 <%= javascript_include_tag 'admin/artists.js' %>
+<%= javascript_include_tag 'admin/albums.js' %>

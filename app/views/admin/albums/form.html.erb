@@ -1,0 +1,25 @@
+<form id="manage_album_form">
+  <div class="form-group">
+    <label for="album_cover_image">Album Cover Image</label>
+    <input name="album[cover_image]" id="album_cover_image" type="file" placeholder="choose a picture">
+  </div>
+  <div class="form-group">
+    <label for="album_name">Name<span class="ms-1 text-danger">*</span></label>
+    <input name="album[name]" id="album_name" type="text" placeholder="Enter a name" value=<%= @album.name %>>
+  </div>
+  <div class="form-group">
+    <label for="released_date">Released Date<span class="ms-1 text-danger">*</span></label>
+    <input name="album[released_date]" id="released_date" type="date" value=<%= @album.released_date %>>
+  </div>
+  <div class="form-group">
+    <label for="album_music_director">Music Director<span class="ms-1 text-danger">*</span></label>
+    <select name="album[artist_id]" id="album_music_director">
+      <%= options_for_select([["Select a Music Director", ""]] + Artist.all.map { |artist| [artist.user.name, artist.id] } , @album.artist_id ) %>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="album_description">Description</label>
+    <textarea name="album[description]" id="album_description" rows="10" placeholder="Enter a description"><%= @album.description %></textarea>
+  </div>
+</form>

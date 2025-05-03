@@ -17,8 +17,6 @@ class Admin::ArtistsController < Admin::BaseController
   def create
     @user = User.new(user_params.merge(password: "artist@123", role: 1 ))
     @artist = @user.build_artist(artist_params)
-    # Here new user object is created , but not saved (with user params + password + role)
-    # build_artist is ruby method which creates a new artist object but not saved , associated with user object
     if @user.save
       render json: { message: "Artist Created Successfully "}, status: :created
     else
@@ -48,23 +46,6 @@ class Admin::ArtistsController < Admin::BaseController
       render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
     end
   end
-
-
-  # // My intial code
-  # @user = User.new(user_params)
-  # @user.role = 1
-  # @user.password = "artist@123"
-  # if @user.save
-  #   @artist = Artist.new(artist_params)
-  #   @artist.user_id = @user.id
-  #   if @artist.save
-  #     render json: { message: 'Artist created successfully.', artist: @artist }, status: :created
-  #   else
-  #     render json: { errors: @artist.errors.full_messages }, status: :unprocessable_entity
-  #   end
-  # else
-  #   render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
-  # end
 
   private
 

@@ -1,31 +1,75 @@
-#artists-table{
-    .artist-avatar{
-        width: 80px;
-        height: 80px;
-        border-radius: 10px;
-        object-fit: cover;
-    }
+.main-artist-container {
 
-    .artist-name{
-        color: var(--color-artist-text);
-        text-decoration: underline;
-        cursor: pointer;
-    }
-
-    .artist-delete{
-        cursor: pointer;
+    .artist-btn{
+        background-color: var(--color-artist);
         &:hover{
-            color: var(--color-red);
+            background-color: var(--color-artist);
         }
     }
 
-    .bio-column {
-        max-width: 200px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+    .bootstrap-table{
+        #artists-table{
+
+            .artist-avatar {
+                width: 80px;
+                height: 80px;
+                border-radius: 10px;
+                object-fit: cover;
+            }
+
+            .artist-name {
+                color: var(--color-artist-text);
+                text-decoration: underline;
+                cursor: pointer;
+            }
+
+            .artist-delete {
+                cursor: pointer;
+
+                &:hover {
+                    color: var(--color-red);
+                }
+            }
+
+            .bio-column {
+                max-width: 200px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            input[type="checkbox"] {
+                &:hover{
+                    border-color: var(--color-artist) !important;
+                }
+
+                &:checked{
+                    background-color: var(--color-artist) !important;
+                    border-color: var(--color-artist) !important;
+
+                }
+            }
+
+        }
     }
 
+    .fixed-table-pagination{
+        .page-item.active .page-link {
+            background-color: var(--color-artist) !important;
+        }
+    }
+
+    .pagination-detail{
+        .pagination-info , .page-list{
+            color: var(--color-artist-text) !important;
+        }
+
+        .dropdown-menu{
+            .dropdown-item.active{
+                background-color: var(--color-artist) !important;
+            }
+        }
+    }
 }
 
 #manage_artist_drawer{
@@ -36,5 +80,4 @@
     .btn-save:hover{
         background-color: var(--color-artist);
     }
-
 }

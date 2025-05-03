@@ -13,7 +13,9 @@ Rails.application.routes.draw do
     root to: "base#index"
     get "get_tab_content" => "base#get_tab_content", as: :get_tab_content
     get "artists/get_artist_form" => "artists#get_artist_form", as: :get_artist_form
+    get "albums/get_album_form" => "albums#get_album_form", as: :get_album_form
     resources :artists , only: [:index, :create , :update , :destroy]
+    resources :albums , only: [:index, :create , :update , :destroy]
   end
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest

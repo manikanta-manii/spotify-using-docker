@@ -1,1 +1,33 @@
-Albums Listing page
+<div class="main-album-container">
+  <div class="toolbar">
+    <button id="add_album_btn" class="btn album-btn manage_album_btn">Add an album</button>
+  </div>
+
+  <table id="albums-table"
+         class="table table-hover"
+         data-toggle="table"
+         data-search="true"
+         data-pagination="true"
+         data-side-pagination="server"
+         data-server-sort="true"
+         data-query-params="albumQueryParams"
+         data-page-size="10"
+         data-page-list="[10,25,50,all]"
+         data-sort-name="name"
+         data-sort-order="asc"
+         data-toolbar=".toolbar"
+         data-toolbar-align="right"
+         data-url="/admin/albums">
+    <thead>
+    <tr>
+      <th data-field="state" data-checkbox="true"></th>
+      <th data-field="cover_image" data-formatter="albumImageFormatter">Cover Image</th>
+      <th data-field="name" data-sortable="true" data-formatter="albumNameFormatter">Name</th>
+      <th data-field="released_date">Released Date</th>
+      <th data-field="music_director">Music Director</th>
+      <th data-field="description">Description</th>
+      <th data-field="action" data-formatter="albumActionFormatter"></th>
+    </tr>
+    </thead>
+  </table>
+</div>

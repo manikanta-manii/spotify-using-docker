@@ -1,5 +1,5 @@
 class Album < ApplicationRecord
-  belongs_to :artist # Note: belongs_to is required by default in Rails 5+
+  belongs_to :artist
   has_many :songs, dependent: :destroy
   has_one_attached :cover_image
 

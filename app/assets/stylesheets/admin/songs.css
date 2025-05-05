@@ -1,0 +1,77 @@
+.main-song-container {
+
+    .song-btn{
+        background-color: var(--color-green);
+        &:hover{
+            background-color: var(--color-green);
+        }
+    }
+
+    .bootstrap-table{
+        #songs-table{
+
+            /*.artist-avatar {*/
+            /*    width: 80px;*/
+            /*    height: 80px;*/
+            /*    border-radius: 10px;*/
+            /*    object-fit: cover;*/
+            /*}*/
+
+            /*.artist-name {*/
+            /*    color: var(--color-green);*/
+            /*    text-decoration: underline;*/
+            /*    cursor: pointer;*/
+            /*}*/
+
+            /*.artist-delete {*/
+            /*    cursor: pointer;*/
+
+            /*    &:hover {*/
+            /*        color: var(--color-red);*/
+            /*    }*/
+            /*}*/
+
+
+            input[type="checkbox"] {
+                &:hover{
+                    border-color: var(--color-green); !important;
+                }
+
+                &:checked{
+                    background-color: var(--color-green); !important;
+                    border-color: var(--color-green); !important;
+
+                }
+            }
+
+        }
+    }
+
+    .fixed-table-pagination{
+        .page-item.active .page-link {
+            background-color: var(--color-green); !important;
+        }
+    }
+
+    .pagination-detail{
+        .pagination-info , .page-list{
+            color: var(--color-green); !important;
+        }
+
+        .dropdown-menu{
+            .dropdown-item.active{
+                background-color: var(--color-green); !important;
+            }
+        }
+    }
+}
+
+#manage_song_drawer{
+    .btn-save{
+        background-color: var(--color-green);
+    }
+
+    .btn-save:hover{
+        background-color: var(--color-green);
+    }
+}

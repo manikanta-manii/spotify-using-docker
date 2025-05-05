@@ -1,7 +1,25 @@
-<%= stylesheet_link_tag 'admin/base.css' %>
-<%= stylesheet_link_tag 'admin/artists.css' %>
 <%= render partial: 'admin/artists/manage_artist_drawer' %>
 <%= render partial: 'admin/albums/manage_album_drawer' %>
+<%= render partial: 'admin/songs/manage_song_drawer' %>
+
+<link href="https://unpkg.com/tabulator-tables@6.3.1/dist/css/tabulator.min.css" rel="stylesheet">
+<script type="text/javascript" src="https://unpkg.com/tabulator-tables@6.3.1/dist/js/tabulator.min.js"></script>
+
+<style>
+    .tabulator{
+        overflow: visible;
+    }
+
+    .tabulator-row .tabulator-cell{
+        overflow: visible;
+        height: auto !important;
+    }
+</style>
+<button id="add-row">Add Blank Row to bottom</button>
+<button id="del-row">Remove Row "Oli Bob"</button>
+<div id="example-table"></div>
+
+
 
 <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.21.3/dist/bootstrap-table.min.css">
 <script src="https://unpkg.com/bootstrap-table@1.21.3/dist/bootstrap-table.min.js"></script>
@@ -23,3 +41,100 @@
 <%= javascript_include_tag 'admin/base.js' %>
 <%= javascript_include_tag 'admin/artists.js' %>
 <%= javascript_include_tag 'admin/albums.js' %>
+<%= javascript_include_tag 'admin/songs.js' %>
+<%= javascript_include_tag 'filter-multi-select-main/dist/filter-multi-select-bundle.min.js' %>
+
+
+<script>
+    //define some sample data
+    let random_name = "mani";
+    let random_number = 1;
+    var tabledata = [
+        {id:1, name:"Oli Bob", age:"12", col:"red", dob:""},
+        {id:2, name:"Mary May", age:"1", col:"blue", dob:"14/05/1982"},
+        {id:3, name:"Christine Lobowski", age:"42", col:"green", dob:"22/05/1982"},
+        {id:4, name:"Brendon Philips", age:"125", col:"orange", dob:"01/08/1980"},
+        {id:5, name:"Margret Marmajuke", age:"16", col:"yellow", dob:"31/01/1999"},
+    ];
+
+
+    //Formatter to generate charts
+    var audioFileFormatter = function(cell, formatterParams, onRendered){
+        // let audio_src = cell.getValue();
+        return `<audio controls="">
+              <source src="blob:http://localhost:3000/5e3aecbd-58ea-4e7d-a26c-4695e79d8a2a" type="audio/mpeg">
+                  Your browser does not support the audio element.
+          </audio>`;
+
+    };
+
+    var artistForamtter = function(cell, formatterParams, onRendered){
+        random_number++;
+
+        // Create the select element
+        const selectElement = document.createElement("select");
+        selectElement.name = `${random_name}_[]${random_number}`;
+        selectElement.id = `${random_name}_${random_number}`;
+        selectElement.multiple = true;
+
+// Define the options
+        const options = [
+            { value: "1", text: "Anirudh" },
+            { value: "2", text: "Gv Prakash" },
+            { value: "3", text: "Ajaneesh lokesh" },
+            { value: "4", text: "Hiphop tamizha" },
+            { value: "5", text: "Hesham abdhul" },
+            { value: "6", text: "v harikrishna" },
+            { value: "7", text: "sai abhayankar" },
+            { value: "8", text: "vijay Thalapathy" },
+            { value: "9", text: "sanjeeth hegde" },
+            { value: "10", text: "DSP" },
+        ];
+
+// Add options to the select element
+        options.forEach(optionData => {
+            const option = document.createElement("option");
+            option.value = optionData.value;
+            option.textContent = optionData.text;
+            selectElement.appendChild(option);
+        });
+        //instantiate piety chart after the cell element has been aded to the DOM
+        onRendered(function(){
+            $(selectElement).filterMultiSelect();
+        });
+
+        return selectElement;
+    }
+
+    //create Tabulator on DOM element with id "example-table"
+    var table = new Tabulator("#example-table", {
+         // set height of table (in CSS or here), this enables the Virtual DOM and improves render speed dramatically (can be any valid css height value)//assign data to table
+        layout:"fitColumns",
+        data: tabledata,//fit columns to width of table (optional)
+        columns:[ //Define Table Columns
+            {title:"Name", field:"name", width:150},
+            {title:"Audio File", field:"age", hozAlign:"left", formatter:audioFileFormatter},
+            {title:"Artists", field:"col" ,formatter: artistForamtter},
+            {title:"Action", field:"dob", sorter:"date", hozAlign:"center"},
+        ],
+
+
+    });
+
+    //Add row on "Add Row" button click
+    document.getElementById("add-row").addEventListener("click", function(){
+        table.addRow({});
+    });
+
+    //Delete row on "Delete Row" button click
+    document.getElementById("del-row").addEventListener("click", function(){
+        table.deleteRow(2);
+    });
+
+
+
+    //trigger an alert message when the row is clicked
+    // table.on("rowClick", function(e, row){
+    //     alert("Row " + row.getData().id + " Clicked!!!!");
+    // });
+</script>

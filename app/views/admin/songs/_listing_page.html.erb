@@ -1,1 +1,32 @@
-Songs Listing page
+<div class="main-song-container">
+  <div class="toolbar">
+    <button id="add_song_btn" class="btn song-btn manage_song_btn">Add a song(s)</button>
+  </div>
+
+  <table id="songs-table"
+         class="table table-hover"
+         data-toggle="table"
+         data-search="true"
+         data-pagination="true"
+         data-side-pagination="server"
+         data-server-sort="true"
+         data-query-params="songQueryParams"
+         data-page-size="10"
+         data-page-list="[10,25,50,all]"
+         data-sort-name="name"
+         data-sort-order="asc"
+         data-toolbar=".toolbar"
+         data-toolbar-align="right"
+         data-url="#">
+    <thead>
+    <tr>
+      <th data-field="state" data-checkbox="true"></th>
+      <th data-field="image_cover" data-formatter="songImageFormatter">Cover Image</th>
+      <th data-field="name" data-sortable="true" data-formatter="songNameFormatter">Name</th>
+      <th data-field="album">Album</th>
+      <th data-field="song_url">Song</th>
+      <th data-field="action" data-formatter="songActionFormatter"></th>
+    </tr>
+    </thead>
+  </table>
+</div>

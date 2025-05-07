@@ -1,48 +1,14 @@
-<div id="manage_song_drawer" class="drawer-component" style="width: 60%;">
+<div id="manage_song_drawer" class="drawer-component" style="width: 75%;">
   <div class="drawer-header">
     <div slot="header"><h4>Add a song(s)</h4></div>
     <span class="material-symbols-outlined close-song-drawer-btn" style="cursor: pointer">close</span>
   </div>
   <div class="drawer-content">
     <div slot="content">
+      <input multiple="multiple" accept="audio/flac,audio/mp3,audio/aac,audio/mpeg" type="file" name="song[audio_file][]" id="song_audio_file" hidden>
+      <span class="material-symbols-outlined add_song_icon">add_circle</span>
       <form id="manage_song_form">
-        <div class="form-group">
-          <label for="song_album">Album<span class="ms-1 text-danger">*</span></label>
-          <select name="song[album_id]" id="song_album">
-            <%= options_for_select([["Select a Album", ""]] + Album.all.map { |album| [album.name, album.id] } ) %>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="song_audio_file">Song(s)<span class="ms-1 text-danger">*</span></label>
-          <input multiple="multiple" accept="audio/flac,audio/mp3,audio/aac,audio/mpeg" type="file" name="song[audio_file][]" id="song_audio_file">
-        </div>
-
-        <table
-          id="songs-selection-table"
-          data-toggle="table"
-          data-max-height="460"
-        >
-          <thead>
-          <tr>
-            <th data-field="id" data-visible="false">
-              ID
-            </th>
-            <th data-field="name">
-              <div>Song Name<span class="ms-1 text-danger">*</span></div>
-            </th>
-            <th data-field="audio_src" data-formatter="audioPlayerFormatter">
-              <div>Audio File<span class="ms-1 text-danger">*</span></div>
-            </th>
-            <th data-field="artists" data-formatter="selectArtistsFormatter">
-              <div>Artist(s)<span class="ms-1 text-danger">*</span></div>
-            </th>
-            <th data-field="delete" data-formatter="deleteRowFormatter">
-              <div>Delete</div>
-            </th>
-          </tr>
-          </thead>
-
-        </table>
+        <div id="songs-selection-table"></div>
       </form>
     </div>
   </div>
@@ -53,120 +19,3 @@
     </div>
   </div>
 </div>
-<style>
-    #songs-selection-table{
-        td{
-            background-color: #2a2a2a;
-            color: white;
-        }
-    }
-
-    #manage_song_drawer {
-        .bootstrap-table .fixed-table-container .fixed-table-body{
-            overflow: visible;
-            /*overflow-y: unset !important;*/
-        }
-    }
-</style>
-
-
-<script>
-    // let TotalSongEntries = 0;
-    // const songSelectionTable = $('#songs-selection-table');
-    // const chooseSongButton = $('#song_audio_file');
-    // const albumDropdown = $('#song_album');
-    //
-    // // Handle file input change
-    // chooseSongButton.on('change', function () {
-    //     // let getLength = songSelectionTable.bootstrapTable('getData').length;
-    //     const files = Array.from(this.files);
-    //     const rows = files.map((file, index) => ({
-    //         id: TotalSongEntries++,
-    //         audio_file: file,
-    //         name: file.name,
-    //         audio_src: URL.createObjectURL(file)
-    //     }));
-    //     debugger
-    //
-    //     // songSelectionTable.bootstrapTable('removeAll');
-    //     songSelectionTable.bootstrapTable('append', rows);
-    //
-    //     // songSelectionTable.find('td').attr('contenteditable', 'true');
-    // });
-
-    let TotalSongEntries = 0;
-    let tableData = []; // Local array to store table data
-    const songSelectionTable = $('#songs-selection-table');
-    const chooseSongButton = $('#song_audio_file');
-
-    // Handle file input change
-    chooseSongButton.on('change', function () {
-        const files = Array.from(this.files);
-        const rows = files.map((file) => ({
-            id: TotalSongEntries++,
-            audio_file: file,
-            name: file.name,
-            audio_src: URL.createObjectURL(file),
-            is_deleted: false
-        }));
-
-        // Add new rows to the local array
-        tableData = tableData.concat(rows);
-
-        // Update the table without refreshing
-        songSelectionTable.bootstrapTable('load', tableData);
-    });
-
-    function selectArtistsFormatter(value, row) {
-        return `<select name="song[${row.id}][artist_ids]" id="song_artist_${row.id}" multiple>
-                <option value="1">Anirudh</option>
-                <option value="2">Gv Prakash</option>
-                <option value="3">Ajaneesh lokesh</option>
-                <option value="4">Hiphop tamizha</option>
-                <option value="5">Hesham abdhul</option>
-                <option value="6">v harikrishna</option>
-                <option value="7">sai abhayankar</option>
-                <option value="8">vijay Thalapathy</option>
-                <option value="9">sanjeeth hegde</option>
-                <option value="10">DSP</option>
-              </select>`;
-    }
-
-    function deleteRowFormatter(value, row, index) {
-        return `<button type="button" class="btn btn-danger delete-row-btn" data-row-id="${row.id}">Delete</button>`;
-    }
-
-
-    $('#songs-selection-table').on('click', '.delete-row-btn', function () {
-        debugger
-        const closetTr = $(this).closest('tr');
-
-        // if(confirm("Are you sure want to delete ? \n Warning: The table will be reset !")){
-        //     const rowId = $(this).data('row-id'); // Get the row ID from the button
-        //     songSelectionTable.bootstrapTable('remove', {
-        //         field: 'id', // Match the field name in the table
-        //         values: [rowId] // Pass the ID of the row to be removed
-        //     });
-        // }
-    });
-
-    function audioPlayerFormatter(value, row) {
-        return `<audio controls>
-                <source src="${value}" type="audio/mpeg">
-                Your browser does not support the audio element.
-              </audio>`;
-    }
-
-    let selectedTag = null ;
-
-    $(document).ready(function () {
-
-        $('#songs-selection-table').on('post-body.bs.table', function () {
-            selectedTag = [];
-            $('[id^="song_artist_"]').each(function () {
-                const selectoption = $(this).filterMultiSelect();
-                selectedTag.push(selectoption);
-            });
-        });
-    });
-</script>

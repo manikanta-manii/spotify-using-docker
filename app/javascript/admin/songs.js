@@ -5,18 +5,6 @@ let songCounter = 1;
 let multiSelectComponents = [];
 $(document).ready(function() {
 
-    songSelectionTable = new Tabulator("#songs-selection-table", {
-        layout:"fitColumns",
-        validationMode:"highlight",
-        columns:[
-            { title:"Sl.No", field:"id" , width: 100 , headerSort:false },
-            { title:"Name <span class='ms-1 text-danger'>*</span>", field:"name" ,editor: 'input' , validator:"required"},
-            { title:"Audio File <span class='ms-1 text-danger'>*</span>", field:"audio_src", formatter: audioFileFormatter , headerSort:false },
-            { title:"Album <span class='ms-1 text-danger'>*</span>", field:"album", formatter: albumFormatter  , headerSort:false},
-            { title:"Artists <span class='ms-1 text-danger'>*</span>", field:"artists",formatter: artistFormatter , headerSort:false},
-            { title:"", field:"delete",width: 60, formatter: deleteFormater, headerSort:false },
-        ],
-    });
 
     $('#current_tab_content').on('click', '.manage_song_btn', handleManageSong);
     $('#current_tab_content').on('click', '.song-delete', handleSongDelete);
@@ -109,6 +97,8 @@ function handleManageSong(){
     .done(function(response) {
         allAlbumsOptions =  createOptionTags(response.all_albums);
         allArtistsOptions =  createOptionTags(response.all_artists);
+        const contentDiv = $('#manage_song_drawer').find('div[slot="content"]');
+        contentDiv.html(response.content);
     })
     .fail(function(response) {
 
@@ -128,15 +118,18 @@ function handleSongDelete(){
 
 function handleSongDrawerClose(){
     closeDrawer('manage_song_drawer');
-    // $('#songs-table').bootstrapTable('refresh');
+    $('#songs-table').bootstrapTable('refresh');
 }
 
 function handleSongSave(){
+    const songSelectionTableLength = songSelectionTable.getDataCount()
+    if(!songSelectionTableLength){
+        return;
+    }
     const songSelectionTableIds =  songSelectionTable.getData().map((item)=>item.id);
     const isValid = songSelectionTable.getInvalidCells().length === 0 && checkAlbumValidation(songSelectionTableIds) && checkArtistsValidation(songSelectionTableIds);
     if(isValid){
-        $("#manage_artist_drawer").LoadingOverlay("show");
-        debugger
+        $("#manage_song_drawer").LoadingOverlay("show");
         const songs = getPlayload();
 
         const formData = new FormData();
@@ -147,7 +140,7 @@ function handleSongSave(){
             formData.append(`songs[${index}][album_id]`, song.album_id);
 
             song.artist_ids.forEach((artistId, i) => {
-                formData.append(`songs[${index}][artist_ids][${i}]`, artistId);
+                formData.append(`songs[${index}][artist_ids][]`, artistId);
             });
         });
 
@@ -160,13 +153,19 @@ function handleSongSave(){
             processData: false,
         })
         .done(function(response) {
-            debugger;
+            handleSongDrawerClose();
         })
         .fail(function(response) {
-
+            const errors = response.responseJSON.errors;
+            if (Array.isArray(errors) && errors.length > 0) {
+                const errorMessage = `Please fix the following errors:\n\n${errors.join('\n')}`;
+                alert(errorMessage);
+            } else {
+                alert('An unknown error occurred.');
+            }
         })
         .always(function() {
-            $("#manage_artist_drawer").LoadingOverlay("hide");
+            $("#manage_song_drawer").LoadingOverlay("hide");
         });
     }
 }
@@ -237,4 +236,28 @@ function songQueryParams(params){
         per_page: params.limit,
         page: params.offset / params.limit + 1
     };
+}
+
+function songNameFormatter(value, row, index){
+    return `<span data-song-id="${row.id}" class="song-name">${value}</span>`
+}
+
+function songImageFormatter(value, row, index) {
+    return `<img src="${value}" alt="Image Cover" class="song-image-cover">`;
+}
+
+function songActionFormatter(value, row, index){
+    return `<span class="material-symbols-outlined song-delete" data-song-id=${row.id}>delete</span>`
+}
+
+function songAudioFileFormatter(value,row,index){
+    return `<audio controls>
+                <source src="${value}" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>`;
+}
+
+function songArtistsFormatter(value,row,index){
+    debugger
+    return value.map((artist)=>artist.name).join(', ');
 }

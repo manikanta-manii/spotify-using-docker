@@ -1,0 +1,20 @@
+<form id="manage_song_selection_form">
+  <input multiple="multiple" accept="audio/flac,audio/mp3,audio/aac,audio/mpeg" type="file" name="song[audio_file][]" id="song_audio_file" hidden>
+  <span class="material-symbols-outlined add_song_icon">add_circle</span>
+  <div id="songs-selection-table"></div>
+</form>
+<script>
+    songSelectionTable = new Tabulator("#songs-selection-table", {
+        layout:"fitColumns",
+        validationMode:"highlight",
+        height:"100%",
+        columns:[
+            { title:"", field:"id" , width: 60 , headerSort:false , resizable:false },
+            { title:"Name <span class='ms-1 text-danger'>*</span>", width: 200 , field:"name" ,editor: 'input' , validator:"required" , resizable:false },
+            { title:"Audio File <span class='ms-1 text-danger'>*</span>", field:"audio_src", formatter: audioFileFormatter , headerSort:false , resizable:false },
+            { title:"Album <span class='ms-1 text-danger'>*</span>", field:"album", formatter: albumFormatter  , headerSort:false , resizable:false },
+            { title:"Artists <span class='ms-1 text-danger'>*</span>", field:"artists",formatter: artistFormatter , headerSort:false , resizable:false },
+            { title:"", field:"delete",width: 60, formatter: deleteFormater, headerSort:false , resizable:false  },
+        ],
+    });
+</script>

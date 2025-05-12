@@ -10,26 +10,26 @@
     .bootstrap-table{
         #songs-table{
 
-            /*.artist-avatar {*/
-            /*    width: 80px;*/
-            /*    height: 80px;*/
-            /*    border-radius: 10px;*/
-            /*    object-fit: cover;*/
-            /*}*/
+            .song-image-cover {
+                width: 80px;
+                height: 80px;
+                border-radius: 10px;
+                object-fit: cover;
+            }
 
-            /*.artist-name {*/
-            /*    color: var(--color-green);*/
-            /*    text-decoration: underline;*/
-            /*    cursor: pointer;*/
-            /*}*/
+            .song-name {
+                color: var(--color-green);
+                text-decoration: underline;
+                cursor: pointer;
+            }
 
-            /*.artist-delete {*/
-            /*    cursor: pointer;*/
+            .song-delete {
+                cursor: pointer;
 
-            /*    &:hover {*/
-            /*        color: var(--color-red);*/
-            /*    }*/
-            /*}*/
+                &:hover {
+                    color: var(--color-red);
+                }
+            }
 
 
             input[type="checkbox"] {
@@ -73,5 +73,47 @@
 
     .btn-save:hover{
         background-color: var(--color-green);
+    }
+
+    .add_song_icon{
+        font-size: 34px;
+        color: var(--color-green);
+        margin-right: 10px;
+        display: flex;
+        cursor: pointer;
+        justify-content: flex-end;
+    }
+
+    #songs-selection-table{
+        margin-top: 20px;
+        font-size: 16px;
+
+        .tabulator-header-contents{
+            border-radius: 10px 10px 0 0;
+        }
+
+        .tabulator-row{
+            background-color: var(--color-black);
+            margin: 20px;
+        }
+
+        .tabulator-header .tabulator-col{
+            background-color: var(--color-green);
+        }
+
+        .tabulator-tableholder{
+            border-radius: 0 0 10px 10px;
+        }
+
+        .tabulator-tableholder .tabulator-table{
+            background-color: var(--color-black);
+        }
+
+        .tabulator-header .tabulator-col.tabulator-sortable[aria-sort=ascending] .tabulator-col-content .tabulator-col-sorter .tabulator-arrow{
+            border-bottom: 6px solid var(--color-red);
+        }
+        .tabulator-header .tabulator-col.tabulator-sortable[aria-sort=descending] .tabulator-col-content .tabulator-col-sorter .tabulator-arrow{
+            border-top: 6px solid var(--color-red);
+        }
     }
 }

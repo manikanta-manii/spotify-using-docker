@@ -17,14 +17,15 @@
          data-sort-order="asc"
          data-toolbar=".toolbar"
          data-toolbar-align="right"
-         data-url="#">
+         data-url="admin/songs">
     <thead>
     <tr>
       <th data-field="state" data-checkbox="true"></th>
-      <th data-field="image_cover" data-formatter="songImageFormatter">Cover Image</th>
+      <th data-field="cover_image" data-formatter="songImageFormatter">Cover Image</th>
       <th data-field="name" data-sortable="true" data-formatter="songNameFormatter">Name</th>
+      <th data-field="audio_file" data-formatter="songAudioFileFormatter">Song</th>
       <th data-field="album">Album</th>
-      <th data-field="song_url">Song</th>
+      <th data-field="artists" data-formatter="songArtistsFormatter">Artists</th>
       <th data-field="action" data-formatter="songActionFormatter"></th>
     </tr>
     </thead>
